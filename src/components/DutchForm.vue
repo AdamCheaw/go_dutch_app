@@ -32,7 +32,7 @@
                 <h1 class="text-xs-center mb-3">記下你的拆帳記錄！</h1>
                 <v-text-field
                   v-model="record.title"
-                  label="主題"
+                  label="項目"
                   color="primary"
                   :rules="noEmpty"
                 ></v-text-field>
@@ -45,8 +45,9 @@
                 ></v-combobox>
                 <v-text-field
                   v-model="record.total"
-                  label="付了多少？ (NT)"
+                  label="項目總額 (NT)"
                   color="primary"
+                  type="number"
                   :rules="totalRules"
                 ></v-text-field>
                 <v-textarea
@@ -59,7 +60,7 @@
                     <v-combobox
                       v-model="record.divide"
                       :items="splitItem"
-                      label="你要拆分幾成？"
+                      label="分成幾等份？"
                       placeholder="ex : /2"
                       color="primary"
                       v-on:change="divideToSelect"
@@ -70,7 +71,7 @@
                     <v-select
                       v-model="record.payerDivide"
                       :items="selectItem"
-                      label="你要付幾成？"
+                      label="付幾分之幾？"
                       placeholder="ex: 1/2 ?"
                       color="primary"
                       :disabled="!divideDisabled"
@@ -123,7 +124,7 @@
                   :key="index"
                 >
                   <v-subheader v-if="doc.payer == 'I' ">I Pay</v-subheader>
-                  <v-subheader v-else>{{doc.payer}} Pay</v-subheader>
+                  <v-subheader v-else>{{doc.payer.userName}} Pay</v-subheader>
                   <!-- for loop all the record -->
                   <v-list-tile v-for="(record,index) in doc.records"
                     :key="`record-${index}`"
@@ -176,16 +177,6 @@
         </v-tab-item>
       </v-tabs>
     </v-flex>
-
-    <v-flex md5 xs12>
-
-    </v-flex >
-
-    <v-flex md6 xs12 offset-md1>
-      <v-card class="mt-5">
-
-      </v-card>
-    </v-flex >
   </v-layout>
 </template>
 
@@ -221,11 +212,11 @@ export default {
     ],
     divideDisabled: false,
     totalRules: [
-      v => !!v || 'Value is required',
+      v => v!="" || 'Value is required',
       v => Number(v) || 'Value must be number'
     ],
     noEmpty: [
-      v => !!v || 'Value is required'
+      v => v!="" || 'Value is required'
     ],
 
   }),
@@ -241,7 +232,7 @@ export default {
     calBill: (total,divide,debtorDivide) => {
       return Number(((total / divide) * debtorDivide).toFixed(0));
     },
-    addRecord(){
+    addRecord(){//add the record to currentBills
       let debtor = this.persons.filter(person => person !== this.record.payer);
       let divide = this.record.divide.replace("/","");
       let payerDivide = Number(this.record.payerDivide.replace("/"+divide,""));
@@ -271,7 +262,7 @@ export default {
       }
       this.record.title = null;
     },
-    divideToSelect() {
+    divideToSelect() {//according user pick divide and change
       let num = parseInt(this.record.divide.replace("/",""));
 
       if(Number.isInteger(num) && num < 10 && num > 1) {
@@ -295,7 +286,6 @@ export default {
       this.record.payerDivide = null;
       this.record.debtorDivide = null;
     }
-
   },
   computed: {
     calculatedTotal:function() {
@@ -346,7 +336,15 @@ export default {
       return this.record.title || this.record.total ||
         this.record.payer || this.record.divide ||
         this.record.payerDivide
-    }
+    },
+    // findDutchPersons() {//find the state.friends with the param.id
+    //   let index = this.$store.state.dutchBills.find(doc => {
+    //     return doc.id == this.$route.params.id
+    //   })
+    //   let bill = this.$store.state.dutchBills[index]
+    //   let persons = this.$store.state.dutchBills[index].persons
+    //   return persons
+    // }
   }
 }
 </script>

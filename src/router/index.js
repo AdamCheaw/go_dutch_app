@@ -19,6 +19,11 @@ export default new Router({
       component: DutchForm
     },
     {
+      path: '/adding/:id',
+      name: 'DutchFormWithFriend',
+      component: DutchForm
+    },
+    {
       path: '*',
       name: 'NotFound',
       component: NotFound
