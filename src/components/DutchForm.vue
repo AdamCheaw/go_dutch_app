@@ -1,6 +1,6 @@
 <template lang="html">
-  <v-layout row wrap>
-    <v-flex offset-md2 md8 xs12>
+  <v-layout row wrap >
+    <v-flex offset-md2 md8 xs12 >
       <v-tabs
         centered
         color="secondary"

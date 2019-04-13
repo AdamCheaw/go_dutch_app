@@ -1,11 +1,29 @@
 import Vue from 'vue'
 import Vuetify, {
   VApp, // required
-  VNavigationDrawer,VFooter,VToolbar,VBtn,
-  VCard,VCombobox,VDatePicker,VDivider,VHover,VIcon,
-  VInput,VItemGroup,VList,VMenu,VResponsive,
-  VSelect,VSubheader,VSystemBar,VTabs,VTextarea,
-  VTextField,VBadge
+  VNavigationDrawer,
+  VFooter,
+  VToolbar,
+  VBtn,
+  VCard,
+  VCombobox,
+  VDatePicker,
+  VTimePicker,
+  VDivider,
+  VHover,
+  VIcon,
+  VInput,
+  VItemGroup,
+  VList,
+  VMenu,
+  VResponsive,
+  VSelect,
+  VSubheader,
+  VSystemBar,
+  VTabs,
+  VTextarea,
+  VTextField,
+  VBadge
 } from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
 
@@ -13,11 +31,29 @@ Vue.use(Vuetify, {
   iconfont: 'md',
   components: {
     VApp, // required
-    VNavigationDrawer,VFooter,VToolbar,VBtn,
-    VCard,VCombobox,VDatePicker,VDivider,VHover,VIcon,
-    VInput,VItemGroup,VList,VMenu,VResponsive,
-    VSelect,VSubheader,VSystemBar,VTabs,VTextarea,
-    VTextField,VBadge
+    VNavigationDrawer,
+    VFooter,
+    VToolbar,
+    VBtn,
+    VCard,
+    VCombobox,
+    VDatePicker,
+    VTimePicker,
+    VDivider,
+    VHover,
+    VIcon,
+    VInput,
+    VItemGroup,
+    VList,
+    VMenu,
+    VResponsive,
+    VSelect,
+    VSubheader,
+    VSystemBar,
+    VTabs,
+    VTextarea,
+    VTextField,
+    VBadge
   },
   theme: {
     primary: '#1E88E5',

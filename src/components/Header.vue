@@ -24,9 +24,8 @@
         <router-link to="/" tag="span" style="cursor: pointer">Let'GoDutch</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only">
+      <v-toolbar-items v-if="isLoggedIn" class="hidden-xs-only">
         <v-btn
-
           flat
           class="subheading font-weight-medium"
           v-for="item in menuItems"
@@ -35,15 +34,33 @@
           <v-icon left dark>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
+
       </v-toolbar-items>
+      <!-- //test logoutBtn -->
+      <v-menu v-if="isLoggedIn" :nudge-width="50">
+      <template v-slot:activator="{ on }">
+        <v-toolbar-title v-on="on">
+          <span>Logout</span>
+          <v-icon dark>arrow_drop_down</v-icon>
+        </v-toolbar-title>
+      </template>
+
+      <v-list>
+        <v-list-tile key="logout" @click="logout">
+          <v-list-tile-title >登出</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+    <!-- end logoutBtn -->
     </v-toolbar>
   </div>
 
 </template>
 
 <script>
+import firebase from 'firebase';
 export default {
-  data () {
+  data() {
     return {
       sideNav: false,
       menuItems: [
@@ -52,8 +69,25 @@ export default {
         { icon: 'person', title: '個人資料', link: '/profile' }
         // { icon: 'face', title: 'Sign up', link: '/signup' },
         // { icon: 'lock_open', title: 'Sign in', link: '/signin' }
-      ]
-
+      ],
+      isLoggedIn: false,
+      currentUser: false
+    }
+  },
+  created() {
+    if (firebase.auth().currentUser) {
+      this.isLoggedIn = true;
+      this.currentUser = firebase.auth().currentUser.email;
+    }
+  },
+  methods: {
+    logout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ path: '/login' });
+        });
     }
   }
 }
