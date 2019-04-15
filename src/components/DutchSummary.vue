@@ -69,7 +69,7 @@
       </v-card>
       <!-- for each related dutchRecords -->
       <v-card
-        v-for="(record, key) in records"
+        v-for="(record, key) in goDutchBooks"
         :key="`record-${key}`"
         elevation="5"
         class="pt-3 mb-2"
@@ -185,7 +185,7 @@
 <script>
 // import components
 import CreatedRecordDialog from "./CreatedRecordDialog";
-import { db, auth } from "../firebase.js";
+import { db, auth } from "../connectfirebase.js";
 var getRecords;
 
 // console.log(records);
@@ -197,20 +197,28 @@ export default {
     records: null
   }),
   created() {
-    var self = this;
-    db.ref("records")
-      .orderByChild("creator")
-      .equalTo("gW2jy8YfYVWCbNrJcJNTvZpxNOg2")
-      .once("value")
-      .then(function(snapshot) {
-        console.log(snapshot.val());
-        self.records = snapshot.val();
-      });
+    // var self = this;
+    // let goDutchBooks = this.$store.state.goDutchBooks;
+    // console.log("sss" + goDutchBooks);
+    // if (Array.isArray(goDutchBooks) && !goDutchBooks.length) {
+    //   console.log("adaasdasdas");
+    //   db.ref("records")
+    //     .orderByChild("creator")
+    //     .equalTo(self.$store.state.userID)
+    //     .once("value")
+    //     .then(function(snapshot) {
+    //       console.log(snapshot.val());
+    //       self.goDutchBooks = snapshot.val();
+    //     });
+    // }
   },
   methods: {},
   computed: {
     dutchBills() {
       return this.$store.state.dutchBills;
+    },
+    goDutchBooks() {
+      return this.$store.state.goDutchBooks;
     }
   }
 };

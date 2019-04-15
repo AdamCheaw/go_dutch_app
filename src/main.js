@@ -1,4 +1,4 @@
-import './firebase'
+import './connectfirebase'
 import firebase from 'firebase'
 import Vue from 'vue'
 import './plugins/vuetify'
@@ -12,12 +12,16 @@ Vue.use(VueFire)
 
 let app;
 firebase.auth().onAuthStateChanged(function(user) {
-  if(!app) {
-    new Vue({
-      render: h => h(App),
-      router: router,
-      store: store
-    }).$mount('#app')
+  if(user) {
+    store.commit("storeUserID", user.uid) //store userID
+    store.dispatch('loadGoDutchBook', String(user.uid)) //store user related goDutchBooks
+    if(!app) {
+      new Vue({
+        render: h => h(App),
+        router: router,
+        store: store
+      }).$mount('#app')
+    }
   }
 });
 // new Vue({

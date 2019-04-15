@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { db, auth } from "../firebase.js";
+import { db, auth } from "../connectfirebase.js";
 export default {
   name: "CreatedRecordDialog",
   data: () => ({

@@ -24,6 +24,7 @@
 import firebase from "firebase";
 import router from "../router";
 var provider = new firebase.auth.GoogleAuthProvider();
+var self = this;
 export default {
   methods: {
     googleLogin() {
@@ -34,7 +35,7 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
+        .then(result => {
           // This gives you a Google Access Token.
           var token = result.credential.accessToken;
           // The signed-in user info.
@@ -42,7 +43,8 @@ export default {
           console.log("Token :");
           console.log(token);
           console.log("User :");
-          console.log(user);
+          console.log(user.uid);
+          this.$store.commit("storeUserID", user.uid);
           router.push({ path: "/" });
           //this.$router.push('/')
         });
